@@ -1,0 +1,3 @@
+class Fonts {
+  // define all fonts here...
+}

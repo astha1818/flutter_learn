@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>805053980402-4ukt268ked1p3pblht3ol3u33f3au0mf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.805053980402-4ukt268ked1p3pblht3ol3u33f3au0mf</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>805053980402-c9ik4n54saba7l0m7eeev5858k3k26ef.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBnhaFICS9COyIc6JsmB3lH7pAzAsAsDes</string>
+	<key>GCM_SENDER_ID</key>
+	<string>805053980402</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.flutterLearn</string>
+	<key>PROJECT_ID</key>
+	<string>flutter-learn-5227a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flutter-learn-5227a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:805053980402:ios:788e00a929658a7e5eba6b</string>
+</dict>
+</plist>
