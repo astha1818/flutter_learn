@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/res/colors.dart';
+import '../res/colors.dart';
 import '../../utlis/helpers/route.dart';
 import '../../res/strings.dart';
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: AppColors.blue,
       ),
-      initialRoute: AppRoutes.signupScreen,
+      initialRoute: AppRoutes.tutorialScreen,
       routes: AppRoutes.getRoutes(),
       debugShowCheckedModeBanner: false,
     );

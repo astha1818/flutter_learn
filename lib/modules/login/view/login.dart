@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_learn/modules/login/view_model/login_model.dart';
+import 'package:flutter_learn/modules/login/bloc/login_bloc.dart';
 import '../../../utlis/helpers/route.dart';
+import '../../../bloc/bloc_builder.dart';
+import '../../../utlis/custom_widgets/custom_snackbar.dart';
 import '../../../utlis/custom_widgets/password_textfield/view/password_textfield.dart';
 import '../../../utlis/custom_widgets/cutom_textformfield.dart';
 import '../../../utlis/helpers/validations.dart';
@@ -10,22 +12,20 @@ import '../../../utlis/custom_widgets/custom_text.dart';
 import '../../../res/strings.dart';
 import '../../../res/colors.dart';
 import '../../../res/dimen.dart';
-import '../bloc/signup_bloc.dart';
+import '../view_model/login_model.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SignupState extends State<Signup> {
-  final TextEditingController _nameController = TextEditingController();
+class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final SignupBloc _signupBloc = SignupBloc();
+  final LoginBloc _loginBloc = LoginBloc();
 
   _returnErrorText() {
     bool isValidated = _formKey.currentState?.validate() ?? false;
@@ -34,27 +34,43 @@ class _SignupState extends State<Signup> {
     }
   }
 
-  _navigateToLogin() {
+  _navigateToSignup() {
     Navigator.of(context).pushReplacementNamed(
-      AppRoutes.loginScreen,
+      AppRoutes.signupScreen,
+      arguments: {
+        'loginType': _loginBloc.state.loginType,
+        'loginData': _loginBloc.state.responseModel?.data,
+      },
     );
   }
 
   _navigateToMyProfile() {
     Navigator.of(context).pushReplacementNamed(
       AppRoutes.myProfileScreen,
-      arguments: _signupBloc.state.responseModel?.data,
+      arguments: _loginBloc.state.responseModel?.data,
     );
+  }
+
+  _onPressGoogle() async {
+    await _loginBloc.googleLogin();
+    if (_loginBloc.state.appState == AppState.success) {
+      if (_loginBloc.state.responseModel?.data['isNewUser']) {
+        _navigateToSignup();
+      } else {
+        _navigateToMyProfile();
+      }
+      // _navigateToMyProfile();
+    } else {
+      CustomSnackbar.showSnackBar(
+        context: context,
+        message: _loginBloc.state.responseModel?.statusMessage ?? '',
+        backgroundColor: AppColors.red,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
-
-    if (args['loginType'] == LoginType.google) {
-      _nameController.text = args['loginData']['full_name'];
-      _emailController.text = args['loginData']['email'];
-    }
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
@@ -80,17 +96,15 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   _sizedBox(height: AppDimen.size40),
-                  _nameTextForm(),
                   _sizedBox(height: AppDimen.size18),
                   _emailTextForm(),
                   _sizedBox(height: AppDimen.size18),
                   PasswordTextField(passwordController: _passwordController),
                   _sizedBox(height: AppDimen.size18),
-                  _phoneNoTextform(),
                   _sizedBox(height: AppDimen.size40),
                   _submitButton(),
                   _sizedBox(height: AppDimen.size40),
-                  // _buildSocialMediaSignup(),
+                  _buildSocialMediaLogin(),
                 ],
               ),
             ),
@@ -103,7 +117,7 @@ class _SignupState extends State<Signup> {
 
   _titleText() {
     return const CustomText(
-      title: AppStrings.signup,
+      title: AppStrings.login,
       fontSize: AppDimen.size40,
       fontWeight: FontWeight.bold,
     );
@@ -118,31 +132,8 @@ class _SignupState extends State<Signup> {
 
   _descriptionText() {
     return const CustomText(
-      title: AppStrings.creatAccount,
+      title: AppStrings.welcomeAgain,
       fontSize: AppDimen.size20,
-    );
-  }
-
-  _nameTextForm() {
-    return CustomTextFormField(
-      textCapitalization: TextCapitalization.words,
-      maxLength: 30,
-      controller: _nameController,
-      fontSize: AppDimen.size18,
-      hintText: AppStrings.enterName,
-      prefixIcon: const CustomIcon(icon: Icons.person),
-      counterText: '',
-      // errorText: _errorText,
-      textInputAction: TextInputAction.next,
-      validator: (value) {
-        return Validation.nameValidation(value);
-      },
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(30),
-        FilteringTextInputFormatter.allow(
-          RegExp(r'[A-Za-z ]'),
-        )
-      ],
     );
   }
 
@@ -163,27 +154,6 @@ class _SignupState extends State<Signup> {
         LengthLimitingTextInputFormatter(50),
         FilteringTextInputFormatter.allow(
           RegExp(r'[A-Za-z0-9@._]'),
-        )
-      ],
-    );
-  }
-
-  _phoneNoTextform() {
-    return CustomTextFormField(
-      maxLength: 10,
-      controller: _phoneController,
-      fontSize: AppDimen.size18,
-      hintText: AppStrings.enterPhoneNumber,
-      prefixIcon: const CustomIcon(icon: Icons.phone),
-      counterText: '',
-      keyboardType: TextInputType.phone,
-      validator: (value) {
-        return Validation.phoneNumberValidation(value);
-      },
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(10),
-        FilteringTextInputFormatter.allow(
-          RegExp(r'[0-9]'),
         )
       ],
     );
@@ -218,15 +188,15 @@ class _SignupState extends State<Signup> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const CustomText(
-            title: AppStrings.haveAnAccount,
+            title: AppStrings.noAccount,
             fontSize: AppDimen.size16,
           ),
           InkWell(
             onTap: () {
-              _navigateToLogin();
+              _navigateToSignup();
             },
             child: const CustomText(
-              title: AppStrings.login,
+              title: AppStrings.signup,
               fontSize: AppDimen.size16,
               fontWeight: FontWeight.bold,
             ),
@@ -236,7 +206,47 @@ class _SignupState extends State<Signup> {
     );
   }
 
-/*  _buildFaebookSignup() {
+  _buildSocialMediaLogin() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildBuilder(),
+        /*_sizedBox(width: AppDimen.size20),
+        _buildFacebookLogin(),
+        _sizedBox(width: AppDimen.size20),
+        _buildAppleLogin(),*/
+      ],
+    );
+  }
+
+  _buildGoogleLogin() {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(AppColors.red),
+      ),
+      onPressed: () {
+        _onPressGoogle();
+      },
+      child: _loginBloc.state.appState == AppState.loading
+          ? const CircularProgressIndicator()
+          : const CustomText(
+              title: 'Google',
+              color: AppColors.white,
+              fontWeight: FontWeight.w600,
+            ),
+    );
+  }
+
+  _buildBuilder() {
+    return BlocBuilder(
+      builder: () {
+        return _buildGoogleLogin();
+      },
+      bloc: _loginBloc,
+    );
+  }
+
+/*  _buildFacebookLogin() {
     return GestureDetector(
       child: const CustomIcon(
         icon: Icons.facebook,
@@ -246,7 +256,7 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  _buildAppleSignup() {
+  _buildAppleLogin() {
     return GestureDetector(
       child: const CustomIcon(
         icon: Icons.apple,

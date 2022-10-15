@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/utlis/helpers/route.dart';
+import '../../utlis/helpers/route.dart';
 import '../../res/colors.dart';
 import '../../res/dimen.dart';
 import '../../res/strings.dart';

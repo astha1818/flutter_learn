@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../modules/login/login.dart';
-import '../../utlis/custom_widgets/custom_text.dart';
-import '../../res/dimen.dart';
-import '../../res/images.dart';
-import '../../res/strings.dart';
-import '../../res/colors.dart';
+import 'package:flutter_learn/bloc/bloc_builder.dart';
+import 'package:flutter_learn/modules/tutorial/bloc/tutorial_bloc.dart';
+import 'package:flutter_learn/modules/tutorial/data/tutorial_data_model.dart';
+import '../../../modules/tutorial/data/tutorial_list.dart';
+import '../../login/view/login.dart';
+import '../../../utlis/custom_widgets/custom_text.dart';
+import '../../../res/dimen.dart';
+import '../../../res/strings.dart';
+import '../../../res/colors.dart';
 
 const int _tutorialItemBase = 1000;
 
@@ -17,33 +20,11 @@ class TutorialPage extends StatefulWidget {
 }
 
 class _TutorialPageState extends State<TutorialPage> {
-  final List<TutorialModal> _list = [
-    TutorialModal(
-      title: AppStrings.tutorialTitle1,
-      description: AppStrings.tutorialDescription,
-      tutorialIcon: AppImages.tutorial1,
-    ),
-    TutorialModal(
-      title: AppStrings.tutorialTitle2,
-      description: AppStrings.tutorialDescription,
-      tutorialIcon: AppImages.tutorial2,
-    ),
-    TutorialModal(
-      title: AppStrings.tutorialTitle3,
-      description: AppStrings.tutorialDescription,
-      tutorialIcon: AppImages.tutorial3,
-    ),
-    TutorialModal(
-      title: AppStrings.tutorialTitle4,
-      description: AppStrings.tutorialDescription,
-      tutorialIcon: AppImages.tutorial4,
-    ),
-  ];
-
   final PageController _pageViewController =
       PageController(initialPage: _tutorialItemBase);
-  int _activePage = 0;
   late Timer? _timer;
+  final List<TutorialDataModal> _list = TutorialList.list;
+  final TutorialBloc _tutorialBloc = TutorialBloc();
 
   @override
   void initState() {
@@ -79,27 +60,23 @@ class _TutorialPageState extends State<TutorialPage> {
     );
   }
 
-  int _getRealIndex(int currentIndex) {
-    int length = _list.length;
-    int offset = currentIndex - _tutorialItemBase;
-    int index = offset % length;
-    return index < 0 ? length + index : index;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: _buildPageView(),
-            ),
-            _buildIndicatorSkipView(),
-          ],
+    return BlocBuilder(
+      builder: () => Scaffold(
+        backgroundColor: AppColors.white,
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: _buildPageView(),
+              ),
+              _buildIndicatorSkipView(),
+            ],
+          ),
         ),
       ),
+      bloc: _tutorialBloc,
     );
   }
 
@@ -110,9 +87,7 @@ class _TutorialPageState extends State<TutorialPage> {
       },
       controller: _pageViewController,
       onPageChanged: (int index) {
-        setState(() {
-          _activePage = _getRealIndex(index);
-        });
+        _tutorialBloc.updateIndex(index);
       },
     );
   }
@@ -163,7 +138,7 @@ class _TutorialPageState extends State<TutorialPage> {
 
   _titleText(int index) {
     return CustomText(
-      title: _list[_getRealIndex(index)].title,
+      title: _list[_tutorialBloc.state.index].title,
       fontSize: AppDimen.size25,
       fontWeight: FontWeight.bold,
     );
@@ -171,7 +146,7 @@ class _TutorialPageState extends State<TutorialPage> {
 
   _descriptionText(int index) {
     return CustomText(
-      title: _list[_getRealIndex(index)].description,
+      title: _list[_tutorialBloc.state.index].description,
       fontSize: AppDimen.size18,
       fontWeight: FontWeight.bold,
     );
@@ -179,7 +154,7 @@ class _TutorialPageState extends State<TutorialPage> {
 
   _tutorialImage(int index) {
     return Image.asset(
-      _list[_getRealIndex(index)].tutorialIcon,
+      _list[_tutorialBloc.state.index].tutorialIcon,
       width: MediaQuery.of(context).size.width,
       fit: BoxFit.contain,
     );
@@ -211,7 +186,9 @@ class _TutorialPageState extends State<TutorialPage> {
             onTap: () {},
             child: Container(
               height: AppDimen.size10,
-              width: _activePage == index ? AppDimen.size20 : AppDimen.size10,
+              width: _tutorialBloc.state.index == index
+                  ? AppDimen.size20
+                  : AppDimen.size10,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(AppDimen.size5)),
                 color: AppColors.red,
@@ -240,14 +217,4 @@ class _TutorialPageState extends State<TutorialPage> {
       ),
     );
   }
-}
-
-class TutorialModal {
-  String title, description, tutorialIcon;
-
-  TutorialModal({
-    required this.title,
-    required this.description,
-    required this.tutorialIcon,
-  });
 }

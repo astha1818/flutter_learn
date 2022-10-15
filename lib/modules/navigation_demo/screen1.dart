@@ -16,22 +16,13 @@ class Screen1 extends StatefulWidget {
 class _Screen1State extends State<Screen1> {
   String? name;
   Future<void> _onPresseEvent(BuildContext context) async {
-    final result = await Navigator.of(context).push(
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const Screen2(name: 'Moved to Screen2'),
         settings:
             const RouteSettings(name: AppRoutes.screen2, arguments: 'screen2'),
       ),
     );
-
-    // final result = await Navigator.of(context).pushNamed(
-    //   AppRoutes.screen2,
-    //   arguments: {'name': 'Moved to Screen2'},
-    // );
-
-    setState(() {
-      name = result;
-    });
   }
 
   @override
@@ -43,8 +34,8 @@ class _Screen1State extends State<Screen1> {
           onPressed: () {
             _onPresseEvent(context);
           },
-          child: CustomText(
-            title: name ?? AppStrings.screen1,
+          child: const CustomText(
+            title: AppStrings.screen1,
             fontSize: AppDimen.size30,
             fontWeight: FontWeight.bold,
           ),

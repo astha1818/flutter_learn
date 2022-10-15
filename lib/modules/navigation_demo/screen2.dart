@@ -14,7 +14,7 @@ class Screen2 extends StatefulWidget {
 
 class _Screen2State extends State<Screen2> {
   void _onPresseEvent(BuildContext context) {
-    Navigator.of(context).pop('Back to Screen1');
+    Navigator.of(context).pop();
 
     // Navigator.of(context).push(
     //   MaterialPageRoute(

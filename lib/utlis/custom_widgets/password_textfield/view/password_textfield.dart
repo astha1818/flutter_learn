@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_learn/bloc/bloc_builder.dart';
-import 'package:flutter_learn/utlis/custom_widgets/password_textfield/controller/password_bloc.dart';
+import '../../../../bloc/bloc_builder.dart';
+import '../../../../utlis/custom_widgets/password_textfield/bloc/password_bloc.dart';
 
 import '../../../../res/dimen.dart';
 import '../../../../res/strings.dart';
@@ -31,8 +31,7 @@ class PasswordTextField extends StatelessWidget {
       prefixIcon: const CustomIcon(icon: Icons.lock),
       suffixIcon: IconButton(
         onPressed: () {
-          _passwordBloc.state.passwordVisible =
-              !_passwordBloc.state.passwordVisible;
+          _passwordBloc.updateState();
         },
         icon: _passwordBloc.state.passwordVisible
             ? const CustomIcon(
@@ -43,7 +42,7 @@ class PasswordTextField extends StatelessWidget {
               ),
       ),
       counterText: '',
-      obscureText: !_passwordBloc.state.passwordVisible,
+      obscureText: _passwordBloc.state.passwordVisible,
       textInputAction: TextInputAction.next,
       validator: (value) {
         return Validation.passwordValidation(value);
