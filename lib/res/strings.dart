@@ -48,4 +48,6 @@ class AppStrings {
   static const String movieType4 = 'Sports';
   static const String movieType5 = 'Streaming';
   static const String movieType6 = 'Video';
+  static const String movieTime = '8 hours ago';
+  static const String favCount = '1';
 }

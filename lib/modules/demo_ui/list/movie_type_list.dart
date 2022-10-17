@@ -1,5 +1,3 @@
-import 'package:flutter_learn/modules/demo_ui/list_model/movie_type_list_model.dart';
-
 import '../../../res/strings.dart';
 
 class MovieTypeList {
@@ -23,4 +21,12 @@ class MovieTypeList {
       AppStrings.movieType6,
     ),
   ];
+}
+
+class MovieTypeListModal {
+  String title;
+
+  MovieTypeListModal(
+    this.title,
+  );
 }

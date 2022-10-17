@@ -1,5 +1,3 @@
-import '../list_model/popular_movie_list_model.dart';
-
 import '../../../res/images.dart';
 import '../../../res/strings.dart';
 
@@ -38,4 +36,13 @@ class PopularMovieList {
       AppImages.netflix,
     ),
   ];
+}
+
+class PopularMovieListModal {
+  String title, image;
+
+  PopularMovieListModal(
+    this.title,
+    this.image,
+  );
 }
