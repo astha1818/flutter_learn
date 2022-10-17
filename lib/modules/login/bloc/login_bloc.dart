@@ -46,7 +46,7 @@ class LoginBloc extends Bloc<LoginModel> {
             'isNewUser': result.additionalUserInfo?.isNewUser,
           },
         );
-        await GoogleSignIn().signOut();
+        // await GoogleSignIn().signOut();
       }
     } catch (e) {
       state.appState = AppState.failure;

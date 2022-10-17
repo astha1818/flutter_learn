@@ -211,10 +211,6 @@ class _LoginState extends State<Login> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildBuilder(),
-        /*_sizedBox(width: AppDimen.size20),
-        _buildFacebookLogin(),
-        _sizedBox(width: AppDimen.size20),
-        _buildAppleLogin(),*/
       ],
     );
   }
@@ -245,25 +241,4 @@ class _LoginState extends State<Login> {
       bloc: _loginBloc,
     );
   }
-
-/*  _buildFacebookLogin() {
-    return GestureDetector(
-      child: const CustomIcon(
-        icon: Icons.facebook,
-        iconSize: AppDimen.size50,
-      ),
-      onTap: () {},
-    );
-  }
-
-  _buildAppleLogin() {
-    return GestureDetector(
-      child: const CustomIcon(
-        icon: Icons.apple,
-        iconSize: AppDimen.size50,
-      ),
-      onTap: () {},
-    );
-  }
-*/
 }

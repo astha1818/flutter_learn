@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/bloc/bloc_builder.dart';
-import 'package:flutter_learn/modules/tutorial/bloc/tutorial_bloc.dart';
-import 'package:flutter_learn/modules/tutorial/data/tutorial_data_model.dart';
+import '../../../bloc/bloc_builder.dart';
+import '../../../modules/tutorial/bloc/tutorial_bloc.dart';
+import '../../../modules/tutorial/data/tutorial_data_model.dart';
+import '../../../utlis/helpers/route.dart';
 import '../../../modules/tutorial/data/tutorial_list.dart';
-import '../../login/view/login.dart';
 import '../../../utlis/custom_widgets/custom_text.dart';
 import '../../../res/dimen.dart';
 import '../../../res/strings.dart';
 import '../../../res/colors.dart';
+import '../../../utlis/helpers/preferences/preference.dart';
 
 const int _tutorialItemBase = 1000;
 
@@ -58,6 +59,11 @@ class _TutorialPageState extends State<TutorialPage> {
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeIn,
     );
+  }
+
+  _navigateToLogin() {
+    Preference.setIsTutorialViewed(true);
+    Navigator.of(context).pushReplacementNamed(AppRoutes.loginScreen);
   }
 
   @override
@@ -203,11 +209,7 @@ class _TutorialPageState extends State<TutorialPage> {
   _buildSkipButton() {
     return TextButton(
       onPressed: () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const Login(),
-          ),
-        );
+        _navigateToLogin();
       },
       child: const CustomText(
         title: AppStrings.skip,

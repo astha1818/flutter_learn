@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_learn/res/strings.dart';
+import 'package:flutter_learn/utlis/helpers/route.dart';
 import '../../../res/colors.dart';
 import '../../../res/dimen.dart';
 import '../../../utlis/custom_widgets/custom_text.dart';
-import '../../../utlis/custom_widgets/custom_icon.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({
@@ -14,6 +15,10 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
+  _navigateToGoogleMap() {
+    Navigator.of(context).pushNamed(AppRoutes.googleMapScreen);
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
@@ -22,7 +27,7 @@ class _MyProfileState extends State<MyProfile> {
       body: Center(
         child: Container(
           decoration: _buildBorder(),
-          padding: const EdgeInsets.all(AppDimen.size40),
+          padding: const EdgeInsets.all(AppDimen.size30),
           margin: const EdgeInsets.symmetric(
             horizontal: AppDimen.size30,
           ),
@@ -35,9 +40,8 @@ class _MyProfileState extends State<MyProfile> {
               _buildNameText(args['full_name']),
               _buildSizedBox(height: AppDimen.size10),
               _buildEmailText(args['email']),
-              _buildSizedBox(height: AppDimen.size10),
-              // _buildPhoneNumberText(args['email']),
-              // _buildSizedBox(height: AppDimen.size10),
+              _buildSizedBox(height: AppDimen.size20),
+              _buildGoogleMapButton(),
             ],
           ),
         ),
@@ -83,58 +87,31 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   _buildNameText(String fullName) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const CustomIcon(
-          icon: Icons.person,
-          iconSize: AppDimen.size24,
-        ),
-        _buildSizedBox(width: AppDimen.size10),
-        CustomText(
-          title: fullName,
-          fontSize: AppDimen.size24,
-          fontWeight: FontWeight.bold,
-        ),
-      ],
+    return CustomText(
+      title: fullName,
+      fontSize: AppDimen.size24,
+      fontWeight: FontWeight.bold,
     );
   }
 
   _buildEmailText(String email) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const CustomIcon(
-          icon: Icons.mail,
-          iconSize: AppDimen.size20,
-        ),
-        _buildSizedBox(width: AppDimen.size10),
-        Expanded(
-          child: CustomText(
-            title: email,
-            fontSize: AppDimen.size20,
-          ),
-        ),
-      ],
+    return CustomText(
+      title: email,
+      fontSize: AppDimen.size20,
     );
   }
 
-  _buildPhoneNumberText(String args) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const CustomIcon(
-          icon: Icons.phone,
-          iconSize: AppDimen.size20,
-        ),
-        _buildSizedBox(width: AppDimen.size10),
-        Expanded(
-          child: CustomText(
-            title: args,
-            fontSize: AppDimen.size20,
-          ),
-        ),
-      ],
+  _buildGoogleMapButton() {
+    return ElevatedButton(
+      onPressed: () {
+        _navigateToGoogleMap();
+      },
+      child: const CustomText(
+        title: 'Open ${AppStrings.googleMap}',
+        color: AppColors.black,
+        fontSize: AppDimen.size18,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
