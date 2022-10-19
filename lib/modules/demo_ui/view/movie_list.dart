@@ -15,7 +15,7 @@ class MovieListView extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.4,
           child: ListView.separated(
             itemBuilder: (context, index) {
               return _buildMovieListItem(context, index);

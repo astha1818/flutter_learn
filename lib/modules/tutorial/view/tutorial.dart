@@ -188,17 +188,14 @@ class _TutorialPageState extends State<TutorialPage> {
         _list.length,
         (index) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppDimen.size5),
-          child: InkWell(
-            onTap: () {},
-            child: Container(
-              height: AppDimen.size10,
-              width: _tutorialBloc.state.index == index
-                  ? AppDimen.size20
-                  : AppDimen.size10,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(AppDimen.size5)),
-                color: AppColors.red,
-              ),
+          child: Container(
+            height: AppDimen.size10,
+            width: _tutorialBloc.state.index == index
+                ? AppDimen.size20
+                : AppDimen.size10,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(AppDimen.size5)),
+              color: AppColors.red,
             ),
           ),
         ),

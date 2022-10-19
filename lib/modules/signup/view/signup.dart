@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_learn/modules/login/view_model/login_model.dart';
+import '../../../modules/login/view_model/login_model.dart';
 import '../../../utlis/helpers/route.dart';
 import '../../../utlis/custom_widgets/password_textfield/view/password_textfield.dart';
 import '../../../utlis/custom_widgets/cutom_textformfield.dart';

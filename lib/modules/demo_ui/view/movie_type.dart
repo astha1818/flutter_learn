@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../../bloc/bloc_builder.dart';
 import '../../../res/colors.dart';
 import '../../../res/dimen.dart';
 import '../../../utlis/custom_widgets/custom_text.dart';
@@ -9,25 +9,30 @@ import '../list/movie_type_list.dart';
 class MovieType extends StatelessWidget {
   MovieType({super.key});
   final List<MovieTypeListModal> _movieTypeList = MovieTypeList.list;
-  final MovieBloc movieBloc = MovieBloc();
+  final MovieBloc _movieBloc = MovieBloc();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
-      child: Wrap(
-        children: List<Widget>.generate(
-          _movieTypeList.length,
-          (index) => _buildMovieTypeItem(index),
-        ).toList(),
-      ),
+    return BlocBuilder(
+      builder: () {
+        return Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Wrap(
+            children: List<Widget>.generate(
+              _movieTypeList.length,
+              (index) => _buildMovieTypeItem(index),
+            ).toList(),
+          ),
+        );
+      },
+      bloc: _movieBloc,
     );
   }
 
   _buildMovieTypeItem(int index) {
     return GestureDetector(
       onTap: () {
-        movieBloc.updateIndex(index);
+        _movieBloc.updateIndex(index);
       },
       child: _buildMovieTypeGestureDetectorChild(index),
     );
@@ -39,7 +44,7 @@ class MovieType extends StatelessWidget {
           horizontal: AppDimen.size10, vertical: AppDimen.size5),
       margin: const EdgeInsets.all(AppDimen.size5),
       decoration: BoxDecoration(
-        color: movieBloc.state.selectedIndex == index
+        color: _movieBloc.state.selectedIndex == index
             ? AppColors.red
             : AppColors.white,
         borderRadius: const BorderRadius.all(
@@ -48,13 +53,13 @@ class MovieType extends StatelessWidget {
           ),
         ),
         border: Border.all(
-            color: movieBloc.state.selectedIndex == index
+            color: _movieBloc.state.selectedIndex == index
                 ? AppColors.red
                 : AppColors.black),
       ),
       child: CustomText(
         title: _movieTypeList[index].title,
-        color: movieBloc.state.selectedIndex == index
+        color: _movieBloc.state.selectedIndex == index
             ? AppColors.white
             : AppColors.black,
       ),

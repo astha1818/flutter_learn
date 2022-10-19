@@ -3,6 +3,9 @@ import '../../../bloc/bloc.dart';
 import '../../../modules/signup/view_model/signup_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../utlis/helpers/app_state.dart';
+import '../../../utlis/helpers/response_modal.dart';
+
 class SignupBloc extends Bloc<SignupModel> {
   @override
   SignupModel initDefaultValue() {

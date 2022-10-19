@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/res/images.dart';
+import '../../res/images.dart';
 import '../../utlis/helpers/preferences/preference.dart';
 import '../../utlis/helpers/route.dart';
 import '../../res/colors.dart';
@@ -15,9 +15,9 @@ class SplashScreen extends StatelessWidget {
       () {
         bool isTutorialViewed = Preference.isTutorialViewed ?? false;
         if (isTutorialViewed) {
-          Navigator.of(context).pushReplacementNamed(AppRoutes.loginScreen);
+          Navigator.of(context).pushNamed(AppRoutes.loginScreen);
         } else {
-          Navigator.of(context).pushReplacementNamed(AppRoutes.tutorialScreen);
+          Navigator.of(context).pushNamed(AppRoutes.tutorialScreen);
         }
       },
     );

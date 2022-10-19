@@ -1,19 +1,12 @@
 import '../../../utlis/helpers/app_state.dart';
 import '../../../utlis/helpers/response_modal.dart';
 
-class LoginModel {
+class ApiModel {
   AppState appState;
   ResponseModel? responseModel;
-  LoginType? loginType;
 
-  LoginModel({
+  ApiModel({
     required this.appState,
     this.responseModel,
-    this.loginType,
   });
-}
-
-enum LoginType {
-  normal,
-  google,
 }

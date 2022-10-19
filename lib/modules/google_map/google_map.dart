@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/res/dimen.dart';
-import 'package:flutter_learn/utlis/custom_widgets/custom_text.dart';
+import '../../res/dimen.dart';
+import '../../utlis/custom_widgets/custom_text.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/res/strings.dart';
-import 'package:flutter_learn/utlis/helpers/route.dart';
+import '../../../res/strings.dart';
+import '../../../utlis/helpers/route.dart';
 import '../../../res/colors.dart';
 import '../../../res/dimen.dart';
 import '../../../utlis/custom_widgets/custom_text.dart';

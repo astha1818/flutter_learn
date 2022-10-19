@@ -1,5 +1,5 @@
-import 'package:flutter_learn/bloc/bloc.dart';
-import 'package:flutter_learn/modules/tutorial/data/tutorial_list.dart';
+import '../../../bloc/bloc.dart';
+import '../../../modules/tutorial/data/tutorial_list.dart';
 
 import '../view_model/tutorial_model.dart';
 

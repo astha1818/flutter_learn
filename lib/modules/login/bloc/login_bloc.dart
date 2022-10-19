@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../bloc/bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import '../../../utlis/helpers/app_state.dart';
+import '../../../utlis/helpers/response_modal.dart';
 import '../view_model/login_model.dart';
 
 class LoginBloc extends Bloc<LoginModel> {
@@ -14,7 +15,7 @@ class LoginBloc extends Bloc<LoginModel> {
 
   Future<void> googleLogin() async {
     state.loginType = LoginType.google;
-    state.appState == AppState.loading;
+    state.appState = AppState.loading;
     emit(state);
 
     try {

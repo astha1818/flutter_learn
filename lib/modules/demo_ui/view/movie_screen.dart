@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/bloc/bloc_builder.dart';
-import 'package:flutter_learn/modules/demo_ui/view/horizontal_view.dart';
-import 'package:flutter_learn/modules/demo_ui/view/movie_type.dart';
+import '../../../modules/demo_ui/view/horizontal_view.dart';
+import '../../../modules/demo_ui/view/movie_type.dart';
 import '../../../res/colors.dart';
 import '../../../res/dimen.dart';
 import '../../../utlis/custom_widgets/custom_text.dart';
@@ -20,14 +19,9 @@ class _MovieScreenState extends State<MovieScreen> {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: _buildAppBar(),
-      body: BlocBuilder(
-        builder: () {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: _buildMainView(),
-          );
-        },
-        bloc: MovieType().movieBloc,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: _buildMainView(),
       ),
       bottomNavigationBar: _buildBottomNavigator(),
     );

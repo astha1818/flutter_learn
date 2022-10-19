@@ -1,4 +1,4 @@
-import 'package:flutter_learn/utlis/helpers/preferences/preference_helper.dart';
+import '../../../utlis/helpers/preferences/preference_helper.dart';
 
 class Preference {
   static setIsTutorialViewed(bool value) {
@@ -8,9 +8,8 @@ class Preference {
     );
   }
 
-  static bool? get isTutorialViewed {
-    return PreferenceHelper.prefs.getBool(PreferenceKey.isTutorialViewed);
-  }
+  static bool? get isTutorialViewed =>
+      PreferenceHelper.prefs.getBool(PreferenceKey.isTutorialViewed);
 }
 
 class PreferenceKey {
