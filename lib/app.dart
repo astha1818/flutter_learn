@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: AppColors.blue,
       ),
-      initialRoute: AppRoutes.heroDemo,
+      initialRoute: AppRoutes.loginScreen,
       routes: AppRoutes.getRoutes(),
       debugShowCheckedModeBanner: false,
     );
